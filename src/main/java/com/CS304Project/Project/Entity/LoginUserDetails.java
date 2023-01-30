@@ -23,7 +23,7 @@ public class LoginUserDetails {
     @Column(name="password")
     private String password;
 
-    @OneToOne(mappedBy = "LoginUserDetails")
+    @OneToOne(mappedBy = "loginUserDetails")
     private User user;
 
 }

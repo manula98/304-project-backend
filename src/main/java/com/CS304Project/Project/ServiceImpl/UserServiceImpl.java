@@ -1,7 +1,9 @@
 package com.CS304Project.Project.ServiceImpl;
 
+import com.CS304Project.Project.DTO.LoginUserDetailsDTO;
 import com.CS304Project.Project.DTO.UserDTO;
 import com.CS304Project.Project.DTO.UserFullDTO;
+import com.CS304Project.Project.Entity.LoginUserDetails;
 import com.CS304Project.Project.Entity.User;
 import com.CS304Project.Project.Repository.UserRepository;
 import com.CS304Project.Project.Service.UserService;
@@ -36,29 +38,87 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+
     @Override
     public UserDTO addUser(UserFullDTO userFullDTO) throws NoSuchAlgorithmException {
         try{
-//            boolean valid = l;
-            return null;
-        }
-        catch(Exception e){
+            boolean valid = loginUserDetailsImpl.validateEmail(userFullDTO.getEmail());
+
+            if(valid){
+                LoginUserDetailsDTO luddto = loginUserDetailsImpl.addLoginUserDetails(userFullDTO);
+                System.out.println(luddto.getEmail());
+                LoginUserDetails lud = modelMapper.map(luddto, LoginUserDetails.class);
+
+                User u = modelMapper.map(userFullDTO, User.class);
+                u.setLoginUserDetails(lud);
+                User us = userRepository.save(u);
+
+                return modelMapper.map(us, new TypeToken<UserDTO>(){
+                }.getType());
+                
+            }else{
+                return null;
+            }
+
+        } catch(Exception e){
             return null;
         }
     }
 
     @Override
     public UserDTO getUserById(int userId) {
-        return null;
+        try{
+            User user = userRepository.getUserById(userId);
+
+            if(user == null){
+                return null;
+
+            }else{
+                return modelMapper.map(user, new TypeToken<UserDTO>(){
+                }.getType());
+            }
+
+        }catch(Exception e){
+            System.out.println(e.toString());
+            return null;
+        }
     }
 
     @Override
     public UserDTO updateUser(UserFullDTO userFullDTO) {
-        return null;
+        try{
+            UserDTO validUser = getUserById(userFullDTO.getUserId());
+
+            if(validUser != null){
+                User user = userRepository.updateUser(userFullDTO.getFname(),userFullDTO.getLname(),userFullDTO.getUserId());
+                return modelMapper.map(user, new TypeToken<UserDTO>(){
+                }.getType());
+
+            }else{
+                return null;
+            }
+
+        }catch(Exception e){
+            System.out.println(e.toString());
+            return null;
+        }
     }
 
     @Override
     public boolean deleteUser(int userId) {
-        return false;
+        boolean delete = false;
+        try{
+            UserDTO user = getUserById(userId);
+
+            if(user != null){
+                userRepository.deleteById(user.getUserId());
+                delete = true;
+            }
+            return delete;
+
+        }catch(Exception e){
+            System.out.println(e.toString());
+            return delete;
+        }
     }
 }

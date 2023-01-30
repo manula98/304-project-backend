@@ -26,4 +26,8 @@ public class User {
 
     @Column(name="isAdmin")
     private  int isAdmin;
+
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "loginId", referencedColumnName = "loginId")
+    private LoginUserDetails loginUserDetails;
 }
