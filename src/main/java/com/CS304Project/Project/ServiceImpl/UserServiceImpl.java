@@ -29,7 +29,6 @@ public class UserServiceImpl implements UserService {
        try{
            List<User> userList = userRepository.findAll();
            return modelMapper.map(userList, new TypeToken<List<UserDTO>>(){
-
            }.getType());
        }
        catch(Exception e){
@@ -46,7 +45,7 @@ public class UserServiceImpl implements UserService {
 
             if(valid){
                 LoginUserDetailsDTO luddto = loginUserDetailsImpl.addLoginUserDetails(userFullDTO);
-                System.out.println(luddto.getEmail());
+                //System.out.println(luddto.getEmail());
                 LoginUserDetails lud = modelMapper.map(luddto, LoginUserDetails.class);
 
                 User u = modelMapper.map(userFullDTO, User.class);

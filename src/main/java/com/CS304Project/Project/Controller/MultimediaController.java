@@ -1,8 +1,8 @@
 package com.CS304Project.Project.Controller;
 
-import com.CS304Project.Project.DTO.UserDTO;
-import com.CS304Project.Project.DTO.UserFullDTO;
-import com.CS304Project.Project.Service.UserService;
+import com.CS304Project.Project.DTO.MultimediaDTO;
+import com.CS304Project.Project.Entity.Multimedia;
+import com.CS304Project.Project.Service.MultimediaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,82 +16,82 @@ import java.util.Map;
 @RestController
 @CrossOrigin
 @RequestMapping
-public class UserController {
+public class MultimediaController {
     @Autowired
-    private UserService userService;
-
-    @GetMapping("/getallusers")
-    public ResponseEntity<?> getAllUsers(){
+    private MultimediaService multimediaService;
+    @GetMapping("/getAllMutlimedia")
+    public ResponseEntity<?> getAllMultimedia(){
         Map<String, Object> map = new LinkedHashMap<String, Object>();
-        List<UserDTO> userList= userService.getAllUsers();
-        if (!userList.isEmpty()) {
-            map.put("status", 1);
-            map.put("data", userList);
-            return new ResponseEntity<>(map, HttpStatus.OK);
-        } else {
-            map.clear();
-            map.put("status", 0);
-            map.put("message", "User list is not found");
-            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
-        }
-    }
+        List<MultimediaDTO> multimediaDTOList = multimediaService.getAllMultimedia();
 
-    @PostMapping("/addUser")
-    public ResponseEntity<?>  addUser(@RequestBody UserFullDTO userFullDTO) throws NoSuchAlgorithmException {
-        Map<String, Object> map = new LinkedHashMap<String, Object>();
-        UserDTO user = userService.addUser(userFullDTO);
-        //String user = userService.addUser(userdata);
-        if (user != null) {
+        if(multimediaDTOList.isEmpty()){
             map.put("status", 1);
-            map.put("data", user);
-            return new ResponseEntity<>(map, HttpStatus.OK);
-        } else {
-            map.clear();
-            map.put("status", 0);
-            map.put("message", "User not added");
-            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @GetMapping("/getuserbyid/{userId}")
-    public ResponseEntity<?> getUserById(@PathVariable int userId){
-        Map<String, Object> map = new LinkedHashMap<String, Object>();
-        UserDTO user = userService.getUserById(userId);
-        if(user != null){
-            map.put("status", 1);
-            map.put("data", user);
+            map.put("data",multimediaDTOList);
             return new ResponseEntity<>(map, HttpStatus.OK);
 
         }else{
             map.clear();
             map.put("status", 0);
-            map.put("message", "User not found");
+            map.put("message", "Multimedia not found");
             return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
         }
     }
-
-    @PutMapping("/updateUser")
-    public ResponseEntity<?> updateUser(@RequestBody UserFullDTO userFullDTO){
+    @PostMapping("/addMultimedia")
+    public ResponseEntity<?> addMultimedia(@RequestBody MultimediaDTO multimediaDTO) throws NoSuchAlgorithmException {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
-        UserDTO user = userService.updateUser(userFullDTO);
+        MultimediaDTO multimedia = multimediaService.addMultimedia(multimediaDTO);
 
-        if(user != null){
+        if(multimedia != null){
             map.put("status", 1);
-            map.put("data", user);
+            map.put("data", multimedia);
             return new ResponseEntity<>(map, HttpStatus.OK);
 
         }else{
             map.clear();
             map.put("status", 0);
-            map.put("message", "USer not found");
+            map.put("message", "Multimedia not added");
             return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
         }
     }
-
-    @DeleteMapping("deleteuser/{userId}")
-    public ResponseEntity<?> deleteUser(@PathVariable int userId){
+    @PutMapping("/updateMultimedia")
+    public ResponseEntity<?> updateMultimedia(@RequestBody MultimediaDTO multimediaDTO){
         Map<String, Object> map = new LinkedHashMap<String, Object>();
-        boolean deleted = userService.deleteUser(userId);
+        MultimediaDTO multimedia = multimediaService.updateMultimedia(multimediaDTO);
+
+        if(multimedia != null){
+            map.put("status", 1);
+            map.put("data", multimedia);
+            return new ResponseEntity<>(map, HttpStatus.OK);
+
+        }else{
+            map.clear();
+            map.put("status", 0);
+            map.put("message", "Multimedia not updated");
+            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+        }
+    }
+    @GetMapping("/getMultimediaById/{multimediaId}")
+    public ResponseEntity<?> getMultimediaById(@PathVariable int multimediaId){
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        MultimediaDTO multimediaDTO = multimediaService.getMultimediaById(multimediaId);
+
+        if(multimediaDTO != null){
+            map.put("status", 1);
+            map.put("data", multimediaDTO);
+            return new ResponseEntity<>(map, HttpStatus.OK);
+
+        }else{
+            map.clear();
+            map.put("status", 0);
+            map.put("message", "Multimedia not found");
+            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+        }
+    }
+    @DeleteMapping("/deleteMultimedia/{multimediaId}")
+    public ResponseEntity<?> deleteMultimedia(@PathVariable int multimediaId){
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        boolean deleted = multimediaService.deleteMultimedia(multimediaId);
+
         if(deleted){
             map.put("status", 1);
             map.put("data", deleted);
@@ -100,7 +100,7 @@ public class UserController {
         }else{
             map.clear();
             map.put("status", 0);
-            map.put("message", "User not found");
+            map.put("message", "Multimedia not found");
             return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
         }
     }

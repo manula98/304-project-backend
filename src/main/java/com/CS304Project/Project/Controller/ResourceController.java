@@ -1,11 +1,12 @@
 package com.CS304Project.Project.Controller;
 
-import com.CS304Project.Project.DTO.UserDTO;
-import com.CS304Project.Project.DTO.UserFullDTO;
-import com.CS304Project.Project.Service.UserService;
+import com.CS304Project.Project.DTO.ResorceDTO;
+import com.CS304Project.Project.Service.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
@@ -16,82 +17,86 @@ import java.util.Map;
 @RestController
 @CrossOrigin
 @RequestMapping
-public class UserController {
+public class ResourceController {
+
     @Autowired
-    private UserService userService;
+    private ResourceService resourceService;
 
-    @GetMapping("/getallusers")
-    public ResponseEntity<?> getAllUsers(){
+    @GetMapping("/getAllResources")
+    public ResponseEntity<?> getAllResource(){
         Map<String, Object> map = new LinkedHashMap<String, Object>();
-        List<UserDTO> userList= userService.getAllUsers();
-        if (!userList.isEmpty()) {
+        List<ResorceDTO> resourceList = resourceService.getAllResources();
+
+        if(!resourceList.isEmpty()){
             map.put("status", 1);
-            map.put("data", userList);
+            map.put("data", resourceList);
             return new ResponseEntity<>(map, HttpStatus.OK);
-        } else {
+        }else{
             map.clear();
             map.put("status", 0);
-            map.put("message", "User list is not found");
+            map.put("message","Resource not found");
             return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
         }
     }
 
-    @PostMapping("/addUser")
-    public ResponseEntity<?>  addUser(@RequestBody UserFullDTO userFullDTO) throws NoSuchAlgorithmException {
+    @PostMapping("/addResource")
+    public ResponseEntity<?> addResource(@RequestBody ResorceDTO resorceDTO) throws NoSuchAlgorithmException{
         Map<String, Object> map = new LinkedHashMap<String, Object>();
-        UserDTO user = userService.addUser(userFullDTO);
-        //String user = userService.addUser(userdata);
-        if (user != null) {
-            map.put("status", 1);
-            map.put("data", user);
-            return new ResponseEntity<>(map, HttpStatus.OK);
-        } else {
-            map.clear();
-            map.put("status", 0);
-            map.put("message", "User not added");
-            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
-        }
-    }
+        ResorceDTO resource = resourceService.addResource(resorceDTO);
 
-    @GetMapping("/getuserbyid/{userId}")
-    public ResponseEntity<?> getUserById(@PathVariable int userId){
-        Map<String, Object> map = new LinkedHashMap<String, Object>();
-        UserDTO user = userService.getUserById(userId);
-        if(user != null){
+        if(resource != null){
             map.put("status", 1);
-            map.put("data", user);
+            map.put("data", resource);
             return new ResponseEntity<>(map, HttpStatus.OK);
 
         }else{
             map.clear();
             map.put("status", 0);
-            map.put("message", "User not found");
+            map.put("message", "Resource not added");
             return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
         }
     }
 
-    @PutMapping("/updateUser")
-    public ResponseEntity<?> updateUser(@RequestBody UserFullDTO userFullDTO){
+    @GetMapping("/getresourcebyid/{resourceId}")
+    public ResponseEntity<?> getResourceById(@PathVariable int resourceId){
         Map<String, Object> map = new LinkedHashMap<String, Object>();
-        UserDTO user = userService.updateUser(userFullDTO);
+        ResorceDTO resource = resourceService.getResourceById(resourceId);
 
-        if(user != null){
+        if(resource != null){
             map.put("status", 1);
-            map.put("data", user);
+            map.put("data", resource);
             return new ResponseEntity<>(map, HttpStatus.OK);
 
         }else{
             map.clear();
             map.put("status", 0);
-            map.put("message", "USer not found");
+            map.put("message", "Resource not found");
+            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+        }
+
+    }
+    @PutMapping("/updateResource")
+    public ResponseEntity<?> updateResource(@RequestBody ResorceDTO resorceDTO){
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        ResorceDTO resource = resourceService.updateResource(resorceDTO);
+
+        if(resource != null){
+            map.put("status",1);
+            map.put("data",resource);
+            return new ResponseEntity<>(map, HttpStatus.OK);
+
+        }else{
+            map.clear();
+            map.put("status",0);
+            map.put("message","Resource not found");
             return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
         }
     }
-
-    @DeleteMapping("deleteuser/{userId}")
-    public ResponseEntity<?> deleteUser(@PathVariable int userId){
+    @DeleteMapping("/deleteResourc/{resourceId}")
+    public ResponseEntity<?> deleteResource(@PathVariable int resourceId){
         Map<String, Object> map = new LinkedHashMap<String, Object>();
-        boolean deleted = userService.deleteUser(userId);
+        boolean deleted = resourceService.deleteResource(resourceId);
+
         if(deleted){
             map.put("status", 1);
             map.put("data", deleted);
@@ -100,7 +105,7 @@ public class UserController {
         }else{
             map.clear();
             map.put("status", 0);
-            map.put("message", "User not found");
+            map.put("message", "Resource not found");
             return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
         }
     }

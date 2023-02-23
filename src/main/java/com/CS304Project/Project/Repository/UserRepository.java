@@ -15,7 +15,7 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     @Query(value = "update User u set u.fname = ?1, u.lname = ?2, where u.userId = ?3 ", nativeQuery = true)
     User updateUser(String fname, String lname, int userId);
 
-    @Query(value = "SELECT * FROM resource_allocation.user WHERE userId = ?1 LIMIT = 1", nativeQuery = true)
+    @Query(value = "SELECT * FROM resource_allocation.user WHERE user_id = ?1 LIMIT 1",nativeQuery = true)
     User getUserById(@Param(value="userId") int userId);
 
 }
