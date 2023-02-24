@@ -1,101 +1,97 @@
 package com.CS304Project.Project.Controller;
 
-import com.CS304Project.Project.DTO.ResorceDTO;
-import com.CS304Project.Project.Service.ResourceService;
+import com.CS304Project.Project.DTO.FeedbackDTO;
+import com.CS304Project.Project.Service.FeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @CrossOrigin
 @RequestMapping
-public class ResourceController {
-
+public class FeedbackController {
     @Autowired
-    private ResourceService resourceService;
-
-    @GetMapping("/getAllResources")
-    public ResponseEntity<?> getAllResource(){
+    private FeedbackService feedbackService;
+    @GetMapping("/getAllFeedback")
+    public ResponseEntity<?> getAllFeedback(){
         Map<String, Object> map = new LinkedHashMap<String, Object>();
-        List<ResorceDTO> resourceList = resourceService.getAllResources();
+        List<FeedbackDTO> feedbackDTOS = feedbackService.getAllFeedback();
 
-        if(!resourceList.isEmpty()){
+        if(!feedbackDTOS.isEmpty()){
             map.put("status", 1);
-            map.put("data", resourceList);
-            return new ResponseEntity<>(map, HttpStatus.OK);
-        }else{
-            map.clear();
-            map.put("status", 0);
-            map.put("message","Resource not found");
-            return new ResponseEntity<>(map, HttpStatus.OK);
-        }
-    }
-
-    @PostMapping("/addResource")
-    public ResponseEntity<?> addResource(@RequestBody ResorceDTO resorceDTO) throws NoSuchAlgorithmException{
-        Map<String, Object> map = new LinkedHashMap<String, Object>();
-        ResorceDTO resource = resourceService.addResource(resorceDTO);
-
-        if(resource != null){
-            map.put("status", 1);
-            map.put("data", resource);
+            map.put("data", feedbackDTOS);
             return new ResponseEntity<>(map, HttpStatus.OK);
 
         }else{
             map.clear();
             map.put("status", 0);
-            map.put("message", "Resource not added");
+            map.put("message", "feedback not found");
             return new ResponseEntity<>(map, HttpStatus.OK);
         }
     }
-
-    @GetMapping("/getresourcebyid/{resourceId}")
-    public ResponseEntity<?> getResourceById(@PathVariable int resourceId){
+    @PostMapping("/addFeedback")
+    public ResponseEntity<?> addFeedback(@RequestBody FeedbackDTO feedbackDTO) throws NoSuchAlgorithmException{
         Map<String, Object> map = new LinkedHashMap<String, Object>();
-        ResorceDTO resource = resourceService.getResourceById(resourceId);
+        FeedbackDTO feedback = feedbackService.addFeedback(feedbackDTO);
 
-        if(resource != null){
+        if(feedback != null){
             map.put("status", 1);
-            map.put("data", resource);
+            map.put("data", feedback);
             return new ResponseEntity<>(map, HttpStatus.OK);
 
         }else{
             map.clear();
             map.put("status", 0);
-            map.put("message", "Resource not found");
+            map.put("message", "Feedback not added");
             return new ResponseEntity<>(map, HttpStatus.OK);
         }
-
     }
-    @PutMapping("/updateResource")
-    public ResponseEntity<?> updateResource(@RequestBody ResorceDTO resorceDTO){
+    @PutMapping("/updateFeedback")
+    public ResponseEntity<?> updateFeedback(FeedbackDTO feedbackDTO){
         Map<String, Object> map = new LinkedHashMap<String, Object>();
-        ResorceDTO resource = resourceService.updateResource(resorceDTO);
+        FeedbackDTO feedback = feedbackService.updateFeedback(feedbackDTO);
 
-        if(resource != null){
-            map.put("status",1);
-            map.put("data",resource);
+        if(feedback != null){
+            map.put("status", 1);
+            map.put("data", feedback);
             return new ResponseEntity<>(map, HttpStatus.OK);
 
         }else{
             map.clear();
-            map.put("status",0);
-            map.put("message","Resource not found");
+            map.put("status", 0);
+            map.put("message", "Feedback not found");
             return new ResponseEntity<>(map, HttpStatus.OK);
         }
     }
-    @DeleteMapping("/deleteResourc/{resourceId}")
-    public ResponseEntity<?> deleteResource(@PathVariable int resourceId){
+    @GetMapping("/getFeedbackById/{feedbackId}")
+    public ResponseEntity<?> getFeedbackById(@PathVariable int feedbackId){
         Map<String, Object> map = new LinkedHashMap<String, Object>();
-        boolean deleted = resourceService.deleteResource(resourceId);
+        FeedbackDTO feedbackDTO = feedbackService.getFeedbackById(feedbackId);
+
+        if(feedbackDTO != null){
+            map.put("status", 1);
+            map.put("data", feedbackDTO);
+            return  new ResponseEntity<>(map, HttpStatus.OK);
+
+        }else{
+            map.clear();
+            map.put("status", 0);
+            map.put("message", "Feedback not found");
+            return new ResponseEntity<>(map, HttpStatus.OK);
+        }
+    }
+    @DeleteMapping("/deleteFeedback/{feedbackId}")
+    public ResponseEntity<?> deleteFeedback(@PathVariable int feedbackId){
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        boolean deleted = feedbackService.deleteFeedback(feedbackId);
 
         if(deleted){
             map.put("status", 1);
@@ -105,7 +101,7 @@ public class ResourceController {
         }else{
             map.clear();
             map.put("status", 0);
-            map.put("message", "Resource not found");
+            map.put("message", "Feedback not found");
             return new ResponseEntity<>(map, HttpStatus.OK);
         }
     }

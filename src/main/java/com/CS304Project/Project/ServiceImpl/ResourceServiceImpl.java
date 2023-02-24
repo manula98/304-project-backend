@@ -41,7 +41,7 @@ public class ResourceServiceImpl implements ResourceService {
             Resource resource = modelMapper.map(resorceDTO, Resource.class);
             Resource addReso = resourceRepository.save(resource);
             //return resorceDTO;
-            return modelMapper.map(resource, new TypeToken<ResorceDTO>(){}.getType());
+            return modelMapper.map(addReso, new TypeToken<ResorceDTO>(){}.getType());
 
         }catch(Exception e){
             System.out.println(e.toString());

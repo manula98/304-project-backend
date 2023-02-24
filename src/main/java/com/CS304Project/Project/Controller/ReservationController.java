@@ -1,12 +1,11 @@
 package com.CS304Project.Project.Controller;
 
-import com.CS304Project.Project.DTO.ResorceDTO;
-import com.CS304Project.Project.Service.ResourceService;
+import com.CS304Project.Project.DTO.ReservationDTO;
+import com.CS304Project.Project.Service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
@@ -17,95 +16,86 @@ import java.util.Map;
 @RestController
 @CrossOrigin
 @RequestMapping
-public class ResourceController {
-
+public class ReservationController {
     @Autowired
-    private ResourceService resourceService;
-
-    @GetMapping("/getAllResources")
-    public ResponseEntity<?> getAllResource(){
+    private ReservationService reservationService;
+    @GetMapping("/getAllReservation")
+    public ResponseEntity<?> getAllReservation(){
         Map<String, Object> map = new LinkedHashMap<String, Object>();
-        List<ResorceDTO> resourceList = resourceService.getAllResources();
+        List<ReservationDTO> reservationDTOList = reservationService.getAllReservation();
 
-        if(!resourceList.isEmpty()){
+        if(!reservationDTOList.isEmpty()){
             map.put("status", 1);
-            map.put("data", resourceList);
+            map.put("data", reservationDTOList);
             return new ResponseEntity<>(map, HttpStatus.OK);
         }else{
             map.clear();
             map.put("status", 0);
-            map.put("message","Resource not found");
+            map.put("message", "Reservation not found");
             return new ResponseEntity<>(map, HttpStatus.OK);
         }
     }
-
-    @PostMapping("/addResource")
-    public ResponseEntity<?> addResource(@RequestBody ResorceDTO resorceDTO) throws NoSuchAlgorithmException{
+    @PostMapping("/addReservation")
+    public ResponseEntity<?> addReservation(@RequestBody ReservationDTO reservationDTO) throws NoSuchAlgorithmException{
         Map<String, Object> map = new LinkedHashMap<String, Object>();
-        ResorceDTO resource = resourceService.addResource(resorceDTO);
+        ReservationDTO reservation = reservationService.addReservation(reservationDTO);
 
-        if(resource != null){
+        if(reservation != null){
             map.put("status", 1);
-            map.put("data", resource);
+            map.put("data", reservation);
             return new ResponseEntity<>(map, HttpStatus.OK);
-
         }else{
             map.clear();
             map.put("status", 0);
-            map.put("message", "Resource not added");
+            map.put("message", "Reservation not added");
             return new ResponseEntity<>(map, HttpStatus.OK);
         }
     }
-
-    @GetMapping("/getresourcebyid/{resourceId}")
-    public ResponseEntity<?> getResourceById(@PathVariable int resourceId){
+    @PutMapping("/updateReservation")
+    public ResponseEntity<?> updateReservation(ReservationDTO reservationDTO){
         Map<String, Object> map = new LinkedHashMap<String, Object>();
-        ResorceDTO resource = resourceService.getResourceById(resourceId);
+        ReservationDTO reservation = reservationService.updateReservation(reservationDTO);
 
-        if(resource != null){
+        if(reservation != null){
             map.put("status", 1);
-            map.put("data", resource);
+            map.put("data", reservation);
             return new ResponseEntity<>(map, HttpStatus.OK);
-
         }else{
             map.clear();
             map.put("status", 0);
-            map.put("message", "Resource not found");
+            map.put("message", "Reservation not found");
             return new ResponseEntity<>(map, HttpStatus.OK);
         }
-
     }
-    @PutMapping("/updateResource")
-    public ResponseEntity<?> updateResource(@RequestBody ResorceDTO resorceDTO){
+    @GetMapping("/getReservationById/{reservationId}")
+    public ResponseEntity<?> getReservationById(@PathVariable  int reservationId){
         Map<String, Object> map = new LinkedHashMap<String, Object>();
-        ResorceDTO resource = resourceService.updateResource(resorceDTO);
+        ReservationDTO reservationDTO = reservationService.getReservationById(reservationId);
 
-        if(resource != null){
-            map.put("status",1);
-            map.put("data",resource);
+        if(reservationDTO != null){
+            map.put("status", 1);
+            map.put("data", reservationDTO);
             return new ResponseEntity<>(map, HttpStatus.OK);
-
         }else{
             map.clear();
-            map.put("status",0);
-            map.put("message","Resource not found");
+            map.put("status", 0);
+            map.put("message", "Reservation not found");
             return new ResponseEntity<>(map, HttpStatus.OK);
         }
     }
-    @DeleteMapping("/deleteResourc/{resourceId}")
-    public ResponseEntity<?> deleteResource(@PathVariable int resourceId){
+
+    public ResponseEntity<?> deleteReservation(@PathVariable int reservationId){
         Map<String, Object> map = new LinkedHashMap<String, Object>();
-        boolean deleted = resourceService.deleteResource(resourceId);
+        boolean deleted = reservationService.deleteReservation(reservationId);
 
         if(deleted){
             map.put("status", 1);
             map.put("data", deleted);
             return new ResponseEntity<>(map, HttpStatus.OK);
-
         }else{
             map.clear();
             map.put("status", 0);
-            map.put("message", "Resource not found");
+            map.put("message", "Reservation not found");
             return new ResponseEntity<>(map, HttpStatus.OK);
         }
     }

@@ -24,7 +24,7 @@ public class MultimediaController {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         List<MultimediaDTO> multimediaDTOList = multimediaService.getAllMultimedia();
 
-        if(multimediaDTOList.isEmpty()){
+        if(!multimediaDTOList.isEmpty()){
             map.put("status", 1);
             map.put("data",multimediaDTOList);
             return new ResponseEntity<>(map, HttpStatus.OK);
@@ -33,7 +33,7 @@ public class MultimediaController {
             map.clear();
             map.put("status", 0);
             map.put("message", "Multimedia not found");
-            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(map, HttpStatus.OK);
         }
     }
     @PostMapping("/addMultimedia")
@@ -50,7 +50,7 @@ public class MultimediaController {
             map.clear();
             map.put("status", 0);
             map.put("message", "Multimedia not added");
-            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(map, HttpStatus.OK);
         }
     }
     @PutMapping("/updateMultimedia")
@@ -67,7 +67,7 @@ public class MultimediaController {
             map.clear();
             map.put("status", 0);
             map.put("message", "Multimedia not updated");
-            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(map, HttpStatus.OK);
         }
     }
     @GetMapping("/getMultimediaById/{multimediaId}")
@@ -84,7 +84,7 @@ public class MultimediaController {
             map.clear();
             map.put("status", 0);
             map.put("message", "Multimedia not found");
-            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(map, HttpStatus.OK);
         }
     }
     @DeleteMapping("/deleteMultimedia/{multimediaId}")
@@ -101,7 +101,7 @@ public class MultimediaController {
             map.clear();
             map.put("status", 0);
             map.put("message", "Multimedia not found");
-            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(map, HttpStatus.OK);
         }
     }
 }

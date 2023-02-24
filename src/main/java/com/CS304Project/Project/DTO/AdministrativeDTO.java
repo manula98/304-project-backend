@@ -9,18 +9,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ResorceDTO {
-
-    private int resourceId;
-
-    private String resourceName;
-
-    private String description;
-
-    private boolean available;
-
-    private int access;
-
+public class AdministrativeDTO {
     private int adminId;
-
+    private String email;
+    private String contactPerson;
+    private String telephone;
 }

@@ -9,18 +9,12 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ResorceDTO {
-
+public class ReservationDTO {
+    private int reservationId;
+    private String date;
+    private String fromTime;
+    private String toTime;
+    private String note;
     private int resourceId;
-
-    private String resourceName;
-
-    private String description;
-
-    private boolean available;
-
-    private int access;
-
-    private int adminId;
-
+    private int userId;
 }

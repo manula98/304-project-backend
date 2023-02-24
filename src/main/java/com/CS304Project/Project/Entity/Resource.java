@@ -17,7 +17,7 @@ import java.util.List;
 public class Resource {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "resourceId")
     private int resourceId;
 
@@ -35,4 +35,11 @@ public class Resource {
 
     @OneToMany(mappedBy = "resource", cascade = CascadeType.REMOVE)
     private List<Multimedia> multimedia;
+
+    @OneToMany(mappedBy = "resource", cascade = CascadeType.REMOVE)
+    private List<Feedback> feedbacks;
+
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "adminId",referencedColumnName = "adminId")
+    private Administrative administrative;
 }

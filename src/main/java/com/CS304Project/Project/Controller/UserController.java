@@ -32,7 +32,7 @@ public class UserController {
             map.clear();
             map.put("status", 0);
             map.put("message", "User list is not found");
-            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(map, HttpStatus.OK);
         }
     }
 
@@ -49,7 +49,7 @@ public class UserController {
             map.clear();
             map.put("status", 0);
             map.put("message", "User not added");
-            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(map, HttpStatus.OK);
         }
     }
 
@@ -66,7 +66,7 @@ public class UserController {
             map.clear();
             map.put("status", 0);
             map.put("message", "User not found");
-            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(map, HttpStatus.OK);
         }
     }
 
@@ -84,7 +84,7 @@ public class UserController {
             map.clear();
             map.put("status", 0);
             map.put("message", "USer not found");
-            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(map, HttpStatus.OK);
         }
     }
 
@@ -101,7 +101,7 @@ public class UserController {
             map.clear();
             map.put("status", 0);
             map.put("message", "User not found");
-            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(map, HttpStatus.OK);
         }
     }
 }

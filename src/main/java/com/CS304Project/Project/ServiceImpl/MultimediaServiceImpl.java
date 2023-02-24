@@ -41,7 +41,7 @@ public class MultimediaServiceImpl implements MultimediaService {
             Multimedia multimedia = modelMapper.map(multimediaDTO,Multimedia.class);
             Multimedia addMultimedia = multimediaRepository.save(multimedia);
 
-            return modelMapper.map(multimedia, new TypeToken<MultimediaDTO>(){}.getType());
+            return modelMapper.map(addMultimedia, new TypeToken<MultimediaDTO>(){}.getType());
         }catch(Exception e){
             System.out.println(e.toString());
             return null;

@@ -9,18 +9,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ResorceDTO {
-
+public class FeedbackDTO {
+    private int feedbackId;
+    private int ratingScore;
+    private String feedbackText;
+    private int userId;
     private int resourceId;
-
-    private String resourceName;
-
-    private String description;
-
-    private boolean available;
-
-    private int access;
-
-    private int adminId;
-
 }
