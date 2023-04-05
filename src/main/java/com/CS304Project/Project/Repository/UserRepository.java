@@ -8,14 +8,22 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Repository
 public interface UserRepository extends JpaRepository<User,Integer> {
     @Transactional
     @Modifying
-    @Query(value = "update User u set u.fname = ?1, u.lname = ?2, where u.userId = ?3 ", nativeQuery = true)
-    User updateUser(String fname, String lname, int userId);
+    @Query(value = "update User u set u.fname = ?1, u.lname = ?2, u.telephone = ?3, u.userRole = ?4 where u.userId = ?5 ", nativeQuery = true)
+    User updateUser(String fname, String lname, String telephone, String userRole, int userId);
 
     @Query(value = "SELECT * FROM resource_allocation.user WHERE user_id = ?1 LIMIT 1",nativeQuery = true)
     User getUserById(@Param(value="userId") int userId);
+
+    @Query(value = "SELECT * FROM resource_allocation.user WHERE login_id = ?1 LIMIT 1",nativeQuery = true)
+    User getUserByLoginId(@Param(value="loginId") int loginId);
+
+    @Query(value = "SELECT * FROM resource_allocation.user WHERE user_id = (SELECT user_id FROM resource_allocation.login_user_details WHERE email = ?1) LIMIT 1", nativeQuery = true)
+    Optional<User> findByEmail(String email);
 
 }

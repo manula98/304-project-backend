@@ -23,4 +23,8 @@ public class ResorceDTO {
 
     private int adminId;
 
+    private boolean staffAvalibility;
+    private boolean studentAvalibility;
+    private boolean publicAvalibility;
+
 }

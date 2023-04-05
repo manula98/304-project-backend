@@ -12,8 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 public interface ResourceRepository extends JpaRepository<Resource, Integer> {
     @Transactional
     @Modifying
-    @Query(value = "update Resource r set r.resourceName = ?1, r.description = ?2, r.access = ?3 where r.resourceId = ?4 ",nativeQuery = true)
-    Resource updateResource(String resourceName, String description, int access, int resourceId);
+    @Query(value = "update Resource r set r.resourceName = ?1, r.description = ?2, r.staffAvalibility = ?3, r.studentAvalibility = ?4, r.publicAvalibility = ?5 where r.resourceId = ?6 LIMIT 1 ",nativeQuery = true)
+    Resource updateResource(String resourceName, String description, boolean staffAvalibility, boolean studentAvalibility, boolean publicAvalibility, int resourceId);
     @Query(value = "SELECT * FROM resource_allocation.resource WHERE resource_id = ?1 LIMIT 1",nativeQuery = true)
     Resource getResourceById(@Param(value = "resourceId")int resourceId);
 }

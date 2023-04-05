@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.tomcat.util.http.fileupload.util.LimitedInputStream;
+
+import java.util.List;
 
 @Entity
 @Table(name = "facility")
@@ -19,4 +22,7 @@ public class Facility {
     private int facilityId;
     @Column(name = "facilityType")
     private String facilityType;
+
+    @OneToMany(mappedBy = "facility", cascade = CascadeType.MERGE)
+    private List<ResourceFacility> resourceFacilities;
 }

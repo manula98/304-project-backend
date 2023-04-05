@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Table(name = "category")
 @NoArgsConstructor
@@ -21,5 +23,7 @@ public class Category {
     @Column(name = "categoryName")
     private String categoryName;
 
-    
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "resourceId", referencedColumnName = "resourceId")
+    private Resource resource;
 }

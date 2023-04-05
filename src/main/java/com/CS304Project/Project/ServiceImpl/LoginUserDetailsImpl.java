@@ -3,12 +3,12 @@ package com.CS304Project.Project.ServiceImpl;
 import com.CS304Project.Project.DTO.LoginUserDetailsDTO;
 import com.CS304Project.Project.DTO.UserFullDTO;
 import com.CS304Project.Project.Entity.LoginUserDetails;
-import com.CS304Project.Project.Other.Encrypt;
 import com.CS304Project.Project.Repository.LoginUserDetailsRepository;
 import com.CS304Project.Project.Service.LoginUserDetailsService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.NoSuchAlgorithmException;
@@ -21,7 +21,8 @@ public class LoginUserDetailsImpl implements LoginUserDetailsService {
     @Autowired
     private ModelMapper modelMapper;
 
-    private Encrypt encrypt = new Encrypt();
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public boolean validateEmail(String email) {
         boolean valid = false;
@@ -41,12 +42,13 @@ public class LoginUserDetailsImpl implements LoginUserDetailsService {
 
     public LoginUserDetailsDTO addLoginUserDetails(UserFullDTO userFullDTO) throws NoSuchAlgorithmException {
         try {
-            //System.out.println(userFullDTO.getEmail());
-            LoginUserDetailsDTO luddto = new LoginUserDetailsDTO(userFullDTO.getEmail(), userFullDTO.getPassword());
+            System.out.println(userFullDTO.getPassword());
+//            LoginUserDetailsDTO luddto = new LoginUserDetailsDTO(userFullDTO.getEmail(), userFullDTO.getPassword());
 
             LoginUserDetails newLogin=new LoginUserDetails();
 
-            String enPassword = encrypt.encryptPassword(luddto.getPassword());
+            String enPassword = passwordEncoder.encode(userFullDTO.getPassword());
+            System.out.println(enPassword);
             newLogin.setEmail(userFullDTO.getEmail());
             newLogin.setPassword(enPassword);
 
@@ -83,7 +85,7 @@ public class LoginUserDetailsImpl implements LoginUserDetailsService {
             LoginUserDetailsDTO loignuddto = getLoginUserDetailsById(userDetailsDTO.getLoginId());
 
             if(loignuddto != null){
-                String enPassword = encrypt.encryptPassword(userDetailsDTO.getPassword());
+                String enPassword = passwordEncoder.encode(userDetailsDTO.getPassword());
                 loginUserDetailsRepository.updateLoginPassword(enPassword,userDetailsDTO.getLoginId());
                 return getLoginUserDetailsById(userDetailsDTO.getLoginId());
             }
@@ -101,6 +103,22 @@ public class LoginUserDetailsImpl implements LoginUserDetailsService {
             }.getType());
 
         }catch(Exception e){
+            System.out.println(e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public LoginUserDetailsDTO getEmailByLoginId(int loginId) {
+        try{
+            LoginUserDetails user = loginUserDetailsRepository.getEmailByLoginId(loginId);
+            if(user!=null){
+                return modelMapper.map(user, new TypeToken<LoginUserDetailsDTO>() {
+                }.getType());
+            }
+            return null;
+        }
+        catch(Exception e){
             System.out.println(e.toString());
             return null;
         }

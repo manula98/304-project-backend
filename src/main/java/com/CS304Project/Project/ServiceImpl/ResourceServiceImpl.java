@@ -41,6 +41,7 @@ public class ResourceServiceImpl implements ResourceService {
             Resource resource = modelMapper.map(resorceDTO, Resource.class);
             Resource addReso = resourceRepository.save(resource);
             //return resorceDTO;
+
             return modelMapper.map(addReso, new TypeToken<ResorceDTO>(){}.getType());
 
         }catch(Exception e){
@@ -73,7 +74,7 @@ public class ResourceServiceImpl implements ResourceService {
             ResorceDTO validResource = getResourceById(resorceDTO.getResourceId());
 
             if(validResource != null){
-                Resource resource = resourceRepository.updateResource(resorceDTO.getResourceName(), resorceDTO.getDescription(),resorceDTO.getAccess() ,resorceDTO.getResourceId());
+                Resource resource = resourceRepository.updateResource(resorceDTO.getResourceName(), resorceDTO.getDescription(),resorceDTO.isStaffAvalibility(),resorceDTO.isStudentAvalibility(), resorceDTO.isPublicAvalibility() ,resorceDTO.getResourceId());
                 return modelMapper.map(resource, new TypeToken<ResorceDTO>(){
                 }.getType());
             }else{

@@ -24,7 +24,7 @@ public class UserController {
     public ResponseEntity<?> getAllUsers(){
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         List<UserDTO> userList= userService.getAllUsers();
-        if (!userList.isEmpty()) {
+        if (userList!=null) {
             map.put("status", 1);
             map.put("data", userList);
             return new ResponseEntity<>(map, HttpStatus.OK);

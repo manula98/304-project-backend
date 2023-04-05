@@ -92,7 +92,7 @@ public class ResourceController {
             return new ResponseEntity<>(map, HttpStatus.OK);
         }
     }
-    @DeleteMapping("/deleteResourc/{resourceId}")
+    @DeleteMapping("/deleteResource/{resourceId}")
     public ResponseEntity<?> deleteResource(@PathVariable int resourceId){
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         boolean deleted = resourceService.deleteResource(resourceId);

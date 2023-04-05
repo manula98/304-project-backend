@@ -9,7 +9,7 @@ import lombok.Setter;
 import java.util.List;
 
 @Entity
-@Table(name="Resource")
+@Table(name="resource")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -27,11 +27,14 @@ public class Resource {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "available")
-    private boolean available;
+    @Column(name = "staffAvalibility")
+    private boolean staffAvalibility;
 
-    @Column(name = "access")
-    private int access;
+    @Column(name = "studentAvalibility")
+    private boolean studentAvalibility;
+
+    @Column(name = "publicAvalibility")
+    private boolean publicAvalibility;
 
     @OneToMany(mappedBy = "resource", cascade = CascadeType.REMOVE)
     private List<Multimedia> multimedia;
@@ -42,4 +45,14 @@ public class Resource {
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "adminId",referencedColumnName = "adminId")
     private Administrative administrative;
+
+    @OneToMany(mappedBy = "resource",cascade = CascadeType.REMOVE)
+    private List<Category> categories;
+
+    @OneToMany(mappedBy = "resource", cascade = CascadeType.REMOVE)
+    private List<Reservation> reservations;
+
+    @OneToMany(mappedBy = "resource", cascade = CascadeType.MERGE)
+    private List<ResourceFacility> resourceFacilities;
+
 }

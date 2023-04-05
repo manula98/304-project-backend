@@ -4,7 +4,9 @@ import com.CS304Project.Project.DTO.LoginUserDetailsDTO;
 import com.CS304Project.Project.DTO.UserDTO;
 import com.CS304Project.Project.DTO.UserFullDTO;
 import com.CS304Project.Project.Entity.LoginUserDetails;
+import com.CS304Project.Project.Entity.Role;
 import com.CS304Project.Project.Entity.User;
+import com.CS304Project.Project.Repository.LoginUserDetailsRepository;
 import com.CS304Project.Project.Repository.UserRepository;
 import com.CS304Project.Project.Service.UserService;
 import org.modelmapper.ModelMapper;
@@ -20,6 +22,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
+    private LoginUserDetailsRepository loginUserDetailsRepository;
+    @Autowired
     private LoginUserDetailsImpl loginUserDetailsImpl;
     @Autowired
     private ModelMapper modelMapper;
@@ -28,8 +32,12 @@ public class UserServiceImpl implements UserService {
     public List<UserDTO> getAllUsers() {
        try{
            List<User> userList = userRepository.findAll();
-           return modelMapper.map(userList, new TypeToken<List<UserDTO>>(){
-           }.getType());
+           if(userList != null){
+               return modelMapper.map(userList, new TypeToken<List<UserDTO>>(){
+               }.getType());
+
+           }
+           return null;
        }
        catch(Exception e){
            System.out.println(e.toString());
@@ -50,7 +58,9 @@ public class UserServiceImpl implements UserService {
 
                 User u = modelMapper.map(userFullDTO, User.class);
                 u.setLoginUserDetails(lud);
+                u.setRole(Role.USER);
                 User us = userRepository.save(u);
+
 
                 return modelMapper.map(us, new TypeToken<UserDTO>(){
                 }.getType());
@@ -89,7 +99,7 @@ public class UserServiceImpl implements UserService {
             UserDTO validUser = getUserById(userFullDTO.getUserId());
 
             if(validUser != null){
-                User user = userRepository.updateUser(userFullDTO.getFname(),userFullDTO.getLname(),userFullDTO.getUserId());
+                User user = userRepository.updateUser(userFullDTO.getFname(),userFullDTO.getLname(),userFullDTO.getTelephone(),userFullDTO.getUserRole(), userFullDTO.getUserId());
                 return modelMapper.map(user, new TypeToken<UserDTO>(){
                 }.getType());
 

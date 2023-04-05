@@ -27,8 +27,13 @@ public class User {
     @Column(name="lname")
     private String lname;
 
-    @Column(name="isAdmin")
-    private  int isAdmin;
+    @Column(name="role")
+    @Enumerated(EnumType.STRING)
+    private  Role role;
+    @Column(name="telephone")
+    private String telephone;
+    @Column(name="userRole")
+    private String userRole;
 
     @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "loginId", referencedColumnName = "loginId")

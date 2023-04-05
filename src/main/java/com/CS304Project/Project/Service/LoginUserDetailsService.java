@@ -11,5 +11,7 @@ public interface LoginUserDetailsService {
     LoginUserDetailsDTO updatePassword(LoginUserDetailsDTO loginUserDetailsDTO) throws NoSuchAlgorithmException;
     List<LoginUserDetailsDTO> getAllLoginUserDetails();
 
+    LoginUserDetailsDTO getEmailByLoginId(int loginId);
+
     boolean validateEmail(String email);
 }

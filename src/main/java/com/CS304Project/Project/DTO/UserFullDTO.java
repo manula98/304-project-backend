@@ -1,5 +1,6 @@
 package com.CS304Project.Project.DTO;
 
+import com.CS304Project.Project.Entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,8 @@ public class UserFullDTO {
     private String email;
     private String password;
     private int loginId;
-    private int isAdmin;
+    private Role role;
+    private String telephone;
+    private String userRole;
 
 }
