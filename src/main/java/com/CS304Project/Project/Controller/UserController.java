@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@CrossOrigin
+@CrossOrigin("*")
 @RequestMapping
 public class UserController {
     @Autowired
@@ -88,7 +88,7 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("deleteuser/{userId}")
+    @DeleteMapping("/deleteuser/{userId}")
     public ResponseEntity<?> deleteUser(@PathVariable int userId){
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         boolean deleted = userService.deleteUser(userId);

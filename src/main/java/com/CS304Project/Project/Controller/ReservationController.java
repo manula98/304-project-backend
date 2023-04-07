@@ -83,7 +83,7 @@ public class ReservationController {
             return new ResponseEntity<>(map, HttpStatus.OK);
         }
     }
-
+    @DeleteMapping("/deleteReservation/{reservationId}")
     public ResponseEntity<?> deleteReservation(@PathVariable int reservationId){
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         boolean deleted = reservationService.deleteReservation(reservationId);

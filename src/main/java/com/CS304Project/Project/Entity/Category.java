@@ -26,4 +26,6 @@ public class Category {
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "resourceId", referencedColumnName = "resourceId")
     private Resource resource;
+    @OneToOne(cascade = CascadeType.MERGE)
+    private Administrative administrative;
 }

@@ -20,17 +20,17 @@ public class Reservation {
     @Column(name = "date")
     private String date;
     @Column(name = "fromTime")
-    private String fromTime;
+    private String startTime;
     @Column(name = "toTime")
-    private String toTime;
+    private String endTime;
     @Column(name = "note")
     private String note;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "userId", referencedColumnName = "userId")
     private User user;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "resourceId", referencedColumnName = "resourceId")
     private Resource resource;
 }

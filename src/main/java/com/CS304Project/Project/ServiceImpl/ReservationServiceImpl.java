@@ -54,7 +54,7 @@ public class ReservationServiceImpl implements ReservationService {
         try{
             ReservationDTO validReservation = getReservationById(reservationDTO.getReservationId());
             if(validReservation != null){
-                Reservation reservation = reservationRepository.updateReservation(reservationDTO.getDate(), reservationDTO.getDate(), reservationDTO.getFromTime(), reservationDTO.getToTime(), reservationDTO.getReservationId());
+                Reservation reservation = reservationRepository.updateReservation(reservationDTO.getDate(), reservationDTO.getDate(), reservationDTO.getStartTime(), reservationDTO.getEndTime(), reservationDTO.getReservationId());
 
                 return modelMapper.map(reservation, new TypeToken<ReservationDTO>(){}.getType());
 

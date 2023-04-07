@@ -42,7 +42,7 @@ public class Resource {
     @OneToMany(mappedBy = "resource", cascade = CascadeType.REMOVE)
     private List<Feedback> feedbacks;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "adminId",referencedColumnName = "adminId")
     private Administrative administrative;
 
@@ -52,7 +52,7 @@ public class Resource {
     @OneToMany(mappedBy = "resource", cascade = CascadeType.REMOVE)
     private List<Reservation> reservations;
 
-    @OneToMany(mappedBy = "resource", cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "resource", cascade = CascadeType.REMOVE)
     private List<ResourceFacility> resourceFacilities;
 
 }

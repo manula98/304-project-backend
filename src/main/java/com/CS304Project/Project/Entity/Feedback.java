@@ -24,11 +24,11 @@ public class Feedback {
     @Column(name = "feedbackText")
     private String feedbackText;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "userId", referencedColumnName = "userId")
     private User user;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "resourceId",referencedColumnName = "resourceId")
     private Resource resource;
 }

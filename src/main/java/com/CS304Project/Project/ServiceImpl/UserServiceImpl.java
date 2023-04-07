@@ -99,9 +99,12 @@ public class UserServiceImpl implements UserService {
             UserDTO validUser = getUserById(userFullDTO.getUserId());
 
             if(validUser != null){
-                User user = userRepository.updateUser(userFullDTO.getFname(),userFullDTO.getLname(),userFullDTO.getTelephone(),userFullDTO.getUserRole(), userFullDTO.getUserId());
-                return modelMapper.map(user, new TypeToken<UserDTO>(){
-                }.getType());
+                int count = userRepository.updateUser(userFullDTO.getFname(),userFullDTO.getLname(),userFullDTO.getTelephone(),userFullDTO.getUserRole(), userFullDTO.getUserId());
+                System.out.println(count);
+                if(count==1){
+                    return getUserById(validUser.getUserId());
+                }
+                return  null;
 
             }else{
                 return null;

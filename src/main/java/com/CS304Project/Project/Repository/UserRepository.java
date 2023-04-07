@@ -14,8 +14,8 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User,Integer> {
     @Transactional
     @Modifying
-    @Query(value = "update User u set u.fname = ?1, u.lname = ?2, u.telephone = ?3, u.userRole = ?4 where u.userId = ?5 ", nativeQuery = true)
-    User updateUser(String fname, String lname, String telephone, String userRole, int userId);
+    @Query(value = "update User u set u.fname = ?1, u.lname = ?2, u.telephone = ?3, u.userRole = ?4 where u.userId = ?5 ")
+    int updateUser(String fname, String lname, String telephone, String userRole, int userId);
 
     @Query(value = "SELECT * FROM resource_allocation.user WHERE user_id = ?1 LIMIT 1",nativeQuery = true)
     User getUserById(@Param(value="userId") int userId);

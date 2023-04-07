@@ -12,8 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 public interface ReservationRepository extends JpaRepository<Reservation, Integer> {
     @Transactional
     @Modifying
-    @Query(value = "update Reservation r set r.date = ?1, r.fromTime = ?2, r.toTime = ?3, r.note = ?4, r.reservationId = ?5", nativeQuery = true)
-    Reservation updateReservation(String date, String fromTime, String toTime, String note, int reservationId);
+    @Query(value = "update Reservation r set r.date = ?1, r.startTime = ?2, r.endTime = ?3, r.note = ?4, r.reservationId = ?5", nativeQuery = true)
+    Reservation updateReservation(String date, String startTime, String endTime, String note, int reservationId);
 
     @Query(value = "SELECT * FROM resource_allocation.reservation WHERE reservation_id = ?1 LIMIT 1", nativeQuery = true)
     Reservation getReservationById(@Param(value = "reservationId") int reservationId);

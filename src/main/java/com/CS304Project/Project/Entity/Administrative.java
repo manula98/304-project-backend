@@ -30,4 +30,7 @@ public class Administrative {
 
     @OneToMany(mappedBy = "administrative", cascade = CascadeType.MERGE)
     private List<Resource> resources;
+    @OneToOne(mappedBy = "administrative",cascade = CascadeType.MERGE)
+    @JoinColumn(name = "categoryId",referencedColumnName = "categoryId")
+    private Category category;
 }

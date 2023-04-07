@@ -10,10 +10,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ReservationDTO {
+
+
     private int reservationId;
     private String date;
-    private String fromTime;
-    private String toTime;
+    private String startTime;
+    private String endTime;
     private String note;
     private int resourceId;
     private int userId;

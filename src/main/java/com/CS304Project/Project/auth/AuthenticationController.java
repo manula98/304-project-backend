@@ -24,7 +24,8 @@ public class AuthenticationController {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         AuthenticationResponse newUser= service.register(userdata);
         if (newUser!=null) {
-            System.out.print(newUser);
+            System.out.print(newUser
+            );
             map.put("status", 1);
             map.put("data", newUser);
             return new ResponseEntity<>(map, HttpStatus.OK);

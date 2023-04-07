@@ -40,6 +40,7 @@ public class ResourceServiceImpl implements ResourceService {
         try{
             Resource resource = modelMapper.map(resorceDTO, Resource.class);
             Resource addReso = resourceRepository.save(resource);
+//            Resource r
             //return resorceDTO;
 
             return modelMapper.map(addReso, new TypeToken<ResorceDTO>(){}.getType());
