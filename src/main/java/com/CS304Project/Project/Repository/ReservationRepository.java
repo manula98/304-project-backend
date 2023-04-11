@@ -8,6 +8,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Integer> {
     @Transactional
@@ -17,4 +19,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
 
     @Query(value = "SELECT * FROM resource_allocation.reservation WHERE reservation_id = ?1 LIMIT 1", nativeQuery = true)
     Reservation getReservationById(@Param(value = "reservationId") int reservationId);
+
+    @Query(value = "SELECT * FROM resource_allocation.reservation WHERE resource_id = ?1 AND date=?2 ", nativeQuery = true)
+    List<Reservation> checkResourceAvalibility(int resourceId, String selectedDate);
 }

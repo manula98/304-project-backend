@@ -12,5 +12,6 @@ public interface UserService {
     UserDTO getUserById(int userId);
     UserDTO updateUser(UserFullDTO userFullDTO);
     boolean deleteUser(int userId);
+    int changeRole(int userId);
 }
 

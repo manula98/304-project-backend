@@ -1,5 +1,6 @@
 package com.CS304Project.Project.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -42,12 +43,11 @@ public class Resource {
     @OneToMany(mappedBy = "resource", cascade = CascadeType.REMOVE)
     private List<Feedback> feedbacks;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "adminId",referencedColumnName = "adminId")
-    private Administrative administrative;
 
-    @OneToMany(mappedBy = "resource",cascade = CascadeType.REMOVE)
-    private List<Category> categories;
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "categoryId", referencedColumnName = "categoryId")
+    private Category category;
 
     @OneToMany(mappedBy = "resource", cascade = CascadeType.REMOVE)
     private List<Reservation> reservations;

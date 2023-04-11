@@ -1,10 +1,7 @@
 package com.CS304Project.Project.Entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -14,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @Setter
 @Getter
+@Builder
 public class Category {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -23,9 +21,8 @@ public class Category {
     @Column(name = "categoryName")
     private String categoryName;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "resourceId", referencedColumnName = "resourceId")
-    private Resource resource;
+    @OneToMany(mappedBy = "category",cascade = CascadeType.REMOVE)
+    private List<Resource> resource;
     @OneToOne(cascade = CascadeType.MERGE)
     private Administrative administrative;
 }

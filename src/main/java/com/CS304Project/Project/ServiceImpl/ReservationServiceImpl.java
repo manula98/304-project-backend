@@ -1,5 +1,6 @@
 package com.CS304Project.Project.ServiceImpl;
 
+import com.CS304Project.Project.DTO.CheckReservatioDTO;
 import com.CS304Project.Project.DTO.ReservationDTO;
 import com.CS304Project.Project.Entity.Reservation;
 import com.CS304Project.Project.Repository.ReservationRepository;
@@ -10,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 @Service
 public class ReservationServiceImpl implements ReservationService {
@@ -98,6 +102,31 @@ public class ReservationServiceImpl implements ReservationService {
         }catch (Exception e){
             System.out.println(e.toString());
             return delete;
+        }
+    }
+
+    @Override
+    public boolean checkResourceAvalibility(CheckReservatioDTO data) {
+        try{
+            List<Reservation> reservationList=reservationRepository.checkResourceAvalibility(data.getResourceId(),data.getSelectedDate());
+            if(reservationList!=null){
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss");
+                for(Reservation r:reservationList){
+                    LocalDateTime date1 = LocalDateTime.parse(data.getSelectedDate()+" "+data.getSelectedTimeFrom()+":00", dtf);
+                    LocalDateTime date2 = LocalDateTime.parse(r.getDate()+" "+r.getStartTime()+":00", dtf);
+
+                    LocalDateTime date3 = LocalDateTime.parse(data.getSelectedDate()+" "+data.getSelectedTimeTo()+":00", dtf);
+                    LocalDateTime date4 = LocalDateTime.parse(r.getDate()+" "+r.getEndTime()+":00", dtf);
+
+                    if ((date1.isAfter(date2) && date1.isBefore(date4)) || (date3.isAfter(date2) && date3.isBefore(date4)) || (date1.isBefore(date2) && date3.isAfter(date4)) || (date1.isEqual(date2) && date3.isEqual( date4)) ) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }catch (Exception e){
+            System.out.println(e.toString());
+            return false;
         }
     }
 }

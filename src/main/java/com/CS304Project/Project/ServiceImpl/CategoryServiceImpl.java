@@ -1,8 +1,12 @@
 package com.CS304Project.Project.ServiceImpl;
 
+import com.CS304Project.Project.DTO.AdministrativeDTO;
 import com.CS304Project.Project.DTO.CategoryDTO;
+import com.CS304Project.Project.Entity.Administrative;
 import com.CS304Project.Project.Entity.Category;
+import com.CS304Project.Project.Repository.AdministrativeRepository;
 import com.CS304Project.Project.Repository.CategoryRepository;
+import com.CS304Project.Project.Service.AdministrativeService;
 import com.CS304Project.Project.Service.CategoryService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -20,7 +24,8 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryRepository categoryRepository;
     @Autowired
     private ModelMapper modelMapper;
-
+    @Autowired
+    private AdministrativeRepository adminRepo;
     @Override
     public List<CategoryDTO> getAllCategory() {
         try{
@@ -40,7 +45,9 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryDTO addCategory(CategoryDTO categoryDTO) throws NoSuchAlgorithmException {
         try{
-            Category category = modelMapper.map(categoryDTO, Category.class);
+            Administrative admin = adminRepo.getAdministrativeById(categoryDTO.getAdminId());
+//            Category category = modelMapper.map(categoryDTO, Category.class);
+            Category category = Category.builder().categoryName(categoryDTO.getCategoryName()).administrative(admin).build();
             Category addCategory = categoryRepository.save(category);
 
             return modelMapper.map(addCategory, new TypeToken<CategoryDTO>(){}.getType());

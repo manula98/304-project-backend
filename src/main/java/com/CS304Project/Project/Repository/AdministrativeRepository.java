@@ -12,9 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 public interface AdministrativeRepository extends JpaRepository<Administrative, Integer> {
     @Transactional
     @Modifying
-    @Query(value = "update Administrative a set a.email = ?1, a.contactPerson = ?2, a.telephone = ?3 where a.adminId", nativeQuery = true)
-    Administrative updateAdministrative(String email, String contactPerson, String telephone, int adminId);
+    @Query(value = "update Administrative a set a.email = ?1, a.contactPerson = ?2, a.telephone = ?3, a.division = ?4 where a.adminId = ?5", nativeQuery = true)
+    int updateAdministrative(String email, String contactPerson, String telephone, String division, int adminId);
 
-    @Query(value = "SELECT * FROM resource_allocation.administrative WHERE admin_id = ?1 LIMIT 1", nativeQuery = true)
+    @Query(value = "SELECT * FROM resource_allocation.administrative WHERE adminid = ?1 LIMIT 1", nativeQuery = true)
     Administrative getAdministrativeById(@Param(value = "adminId") int adminId);
 }

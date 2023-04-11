@@ -24,7 +24,7 @@ public class CategoryController {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         List<CategoryDTO> categoryDTOS = categoryService.getAllCategory();
         map.put("status", 1);
-        map.put("data", "categoryDTOS");
+        map.put("data", categoryDTOS);
         return new ResponseEntity<>(map, HttpStatus.OK);
 
 //        if(!categoryDTOS.isEmpty()){

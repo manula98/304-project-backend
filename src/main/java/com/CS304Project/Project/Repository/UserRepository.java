@@ -1,5 +1,6 @@
 package com.CS304Project.Project.Repository;
 
+import com.CS304Project.Project.Entity.Role;
 import com.CS304Project.Project.Entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -12,6 +13,10 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User,Integer> {
+    @Transactional
+    @Modifying
+    @Query("update User u set u.role = ?1 where u.userId = ?2")
+    int changeRole(Role role, int userId);
     @Transactional
     @Modifying
     @Query(value = "update User u set u.fname = ?1, u.lname = ?2, u.telephone = ?3, u.userRole = ?4 where u.userId = ?5 ")

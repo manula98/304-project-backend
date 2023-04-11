@@ -133,4 +133,28 @@ public class UserServiceImpl implements UserService {
             return delete;
         }
     }
+
+    @Override
+    public int changeRole(int userId) {
+        try{
+            UserDTO user=getUserById(userId);
+            Role r;
+            if(user.getRole()==Role.USER){
+                r=Role.ADMIN;
+            }
+            else{
+                r=Role.USER;
+            }
+
+            int count =userRepository.changeRole(r,userId);
+            if(count==1){
+                return count;
+            }
+            return 0;
+        }
+        catch(Exception e){
+            System.out.println(e.toString());
+            return 0;
+        }
+    }
 }

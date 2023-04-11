@@ -1,5 +1,6 @@
 package com.CS304Project.Project.Controller;
 
+import com.CS304Project.Project.DTO.CheckReservatioDTO;
 import com.CS304Project.Project.DTO.ReservationDTO;
 import com.CS304Project.Project.Service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,6 +92,23 @@ public class ReservationController {
         if(deleted){
             map.put("status", 1);
             map.put("data", deleted);
+            return new ResponseEntity<>(map, HttpStatus.OK);
+        }else{
+            map.clear();
+            map.put("status", 0);
+            map.put("message", "Reservation not found");
+            return new ResponseEntity<>(map, HttpStatus.OK);
+        }
+    }
+
+    @PostMapping("/checkresourceavalibility")
+    public ResponseEntity<?> checkResourceAvalibility(@RequestBody CheckReservatioDTO data){
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        boolean avalibility = reservationService.checkResourceAvalibility(data);
+
+        if(avalibility==true){
+            map.put("status", 1);
+            map.put("data", avalibility);
             return new ResponseEntity<>(map, HttpStatus.OK);
         }else{
             map.clear();

@@ -25,8 +25,8 @@ public interface LoginUserDetailsRepository extends JpaRepository<LoginUserDetai
     @Query(value = "SELECT * FROM resource_allocation.login_user_details WHERE email=?1 LIMIT 1", nativeQuery = true)
     Optional<LoginUserDetails> findByEmail(String email);
 
-    @Query(value = "SELECT * FROM resource_allocation.login_user_details WHERE userId=?1 LIMIT 1", nativeQuery = true)
+    @Query(value = "SELECT * FROM resource_allocation.login_user_details WHERE user_id=?1 LIMIT 1", nativeQuery = true)
     LoginUserDetails getEmailByUserId(int userId);
-    @Query(value = "SELECT * FROM resource_allocation.login_user_details WHERE loginId = ?1 LIMIT 1",nativeQuery = true)
+    @Query(value = "SELECT * FROM resource_allocation.login_user_details WHERE login_id = ?1 LIMIT 1",nativeQuery = true)
     LoginUserDetails getEmailByLoginId(int loginId);
 }

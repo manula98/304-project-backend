@@ -27,9 +27,9 @@ public class Administrative {
     private String contactPerson;
     @Column(name = "telephone")
     private String telephone;
+    @Column(name="division")
+    private String division;
 
-    @OneToMany(mappedBy = "administrative", cascade = CascadeType.MERGE)
-    private List<Resource> resources;
     @OneToOne(mappedBy = "administrative",cascade = CascadeType.MERGE)
     @JoinColumn(name = "categoryId",referencedColumnName = "categoryId")
     private Category category;

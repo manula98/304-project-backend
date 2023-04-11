@@ -55,9 +55,11 @@ public class AdministrativeServiceImpl implements AdministrativeService {
             AdministrativeDTO administrativeDTO1 = getAdministrativeById(administrativeDTO.getAdminId());
 
             if(administrativeDTO1 != null){
-                Administrative administrative = administrativeRepository.updateAdministrative(administrativeDTO.getEmail(), administrativeDTO.getContactPerson(), administrativeDTO.getTelephone(), administrativeDTO.getAdminId());
-
-                return modelMapper.map(administrative, new TypeToken<AdministrativeDTO>(){}.getType());
+                int count = administrativeRepository.updateAdministrative(administrativeDTO.getEmail(), administrativeDTO.getContactPerson(), administrativeDTO.getTelephone(), administrativeDTO.getDivision(), administrativeDTO.getAdminId());
+                if(count == 1){
+                    return getAdministrativeById(administrativeDTO.getAdminId());
+                }
+                return null;
             }
             return null;
         }catch (Exception e){

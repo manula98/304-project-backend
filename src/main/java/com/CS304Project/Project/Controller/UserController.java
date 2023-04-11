@@ -104,4 +104,20 @@ public class UserController {
             return new ResponseEntity<>(map, HttpStatus.OK);
         }
     }
+
+    @PutMapping("/changerole/{userId}")
+    public ResponseEntity<?>  changeRole(@PathVariable int userId) {
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        int count = userService.changeRole(userId);;
+        if (count==1) {
+            map.put("status", 1);
+            map.put("data", true);
+            return new ResponseEntity<>(map, HttpStatus.OK);
+        } else {
+            map.clear();
+            map.put("status", 0);
+            map.put("message", false);
+            return new ResponseEntity<>(map, HttpStatus.OK);
+        }
+    }
 }

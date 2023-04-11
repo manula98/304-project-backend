@@ -17,12 +17,11 @@ public class ResorceDTO {
 
     private String description;
 
-    private int administrativeAdminId;
-
     private boolean staffAvalibility;
 
     private boolean studentAvalibility;
 
     private boolean publicAvalibility;
+    private int categoryId;
 
 }

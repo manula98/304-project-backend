@@ -111,11 +111,14 @@ public class LoginUserDetailsImpl implements LoginUserDetailsService {
     @Override
     public LoginUserDetailsDTO getEmailByLoginId(int loginId) {
         try{
+//            System.out.println("1");
             LoginUserDetails user = loginUserDetailsRepository.getEmailByLoginId(loginId);
             if(user!=null){
+//                System.out.println("2");
                 return modelMapper.map(user, new TypeToken<LoginUserDetailsDTO>() {
                 }.getType());
             }
+//            System.out.println("3");
             return null;
         }
         catch(Exception e){

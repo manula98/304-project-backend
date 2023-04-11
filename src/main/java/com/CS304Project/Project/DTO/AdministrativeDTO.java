@@ -14,4 +14,5 @@ public class AdministrativeDTO {
     private String email;
     private String contactPerson;
     private String telephone;
+    private String division;
 }

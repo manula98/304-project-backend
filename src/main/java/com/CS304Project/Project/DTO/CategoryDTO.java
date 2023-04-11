@@ -14,4 +14,5 @@ public class CategoryDTO {
     private int categoryId;
     private String categoryName;
     private int resourceId;
+    private int adminId;
 }

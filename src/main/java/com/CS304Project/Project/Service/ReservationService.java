@@ -1,5 +1,6 @@
 package com.CS304Project.Project.Service;
 
+import com.CS304Project.Project.DTO.CheckReservatioDTO;
 import com.CS304Project.Project.DTO.ReservationDTO;
 
 import java.security.NoSuchAlgorithmException;
@@ -12,4 +13,5 @@ public interface ReservationService {
     ReservationDTO getReservationById(int reservationId);
     boolean deleteReservation(int reservationId);
 
+    boolean checkResourceAvalibility(CheckReservatioDTO data);
 }
