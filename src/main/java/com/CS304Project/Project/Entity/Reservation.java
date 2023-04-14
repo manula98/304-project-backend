@@ -19,9 +19,9 @@ public class Reservation {
     private int reservationId;
     @Column(name = "date")
     private String date;
-    @Column(name = "fromTime")
+    @Column(name = "startTime")
     private String startTime;
-    @Column(name = "toTime")
+    @Column(name = "endTime")
     private String endTime;
     @Column(name = "note")
     private String note;

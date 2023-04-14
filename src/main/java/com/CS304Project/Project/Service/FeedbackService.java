@@ -11,4 +11,5 @@ public interface FeedbackService {
     FeedbackDTO updateFeedback(FeedbackDTO feedbackDTO);
     FeedbackDTO getFeedbackById(int feedbackId);
     boolean deleteFeedback(int feedbackId);
+    List<FeedbackDTO> getFeedbackByResourceId(int resourceId);
 }

@@ -8,6 +8,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
     @Transactional
@@ -17,4 +19,7 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
 
     @Query(value = "SELECT * FROM resource_allocation.feedback WHERE feedback_id = ?1 LIMIT 1", nativeQuery = true)
     Feedback getFeedbackById(@Param(value = "feedbackId") int feedbackId);
+
+    @Query(value = "SELECT * FROM resource_allocation.feedback WHERE resource_id = ?1", nativeQuery = true)
+    List<Feedback> getFeedbackByResourceId(@Param(value = "resourceId") int resourceId);
 }

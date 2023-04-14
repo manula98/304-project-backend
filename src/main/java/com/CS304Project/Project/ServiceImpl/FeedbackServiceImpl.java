@@ -19,18 +19,20 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Autowired
     private ModelMapper modelMapper;
+
     @Override
     public List<FeedbackDTO> getAllFeedback() {
-        try{
+        try {
             List<Feedback> feedbacks = feedbackRepository.findAll();
 
-            if(feedbacks == null){
+            if (feedbacks == null) {
                 return null;
 
-            }else{
-                return modelMapper.map(feedbacks, new TypeToken<List<FeedbackDTO>>(){}.getType());
+            } else {
+                return modelMapper.map(feedbacks, new TypeToken<List<FeedbackDTO>>() {
+                }.getType());
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.toString());
             return null;
         }
@@ -38,12 +40,13 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Override
     public FeedbackDTO addFeedback(FeedbackDTO feedbackDTO) throws NoSuchAlgorithmException {
-        try{
-            Feedback feedback = modelMapper.map(feedbackDTO,Feedback.class);
+        try {
+            Feedback feedback = modelMapper.map(feedbackDTO, Feedback.class);
             Feedback addFeedback = feedbackRepository.save(feedback);
 
-            return modelMapper.map(addFeedback, new TypeToken<FeedbackDTO>(){}.getType());
-        }catch (Exception e){
+            return modelMapper.map(addFeedback, new TypeToken<FeedbackDTO>() {
+            }.getType());
+        } catch (Exception e) {
             System.out.println(e.toString());
             return null;
         }
@@ -51,16 +54,17 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Override
     public FeedbackDTO updateFeedback(FeedbackDTO feedbackDTO) {
-        try{
+        try {
             FeedbackDTO feedback = getFeedbackById(feedbackDTO.getFeedbackId());
 
-            if(feedback != null){
+            if (feedback != null) {
                 Feedback feedback1 = feedbackRepository.updateFeedback(feedback.getRatingScore(), feedbackDTO.getFeedbackText(), feedbackDTO.getFeedbackId());
 
-                return modelMapper.map(feedback1, new TypeToken<FeedbackDTO>(){}.getType());
+                return modelMapper.map(feedback1, new TypeToken<FeedbackDTO>() {
+                }.getType());
             }
             return null;
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.toString());
             return null;
         }
@@ -68,14 +72,15 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Override
     public FeedbackDTO getFeedbackById(int feedbackId) {
-        try{
+        try {
             Feedback feedback = feedbackRepository.getFeedbackById(feedbackId);
 
-            if(feedback != null){
-                return modelMapper.map(feedback, new TypeToken<FeedbackDTO>(){}.getType());
+            if (feedback != null) {
+                return modelMapper.map(feedback, new TypeToken<FeedbackDTO>() {
+                }.getType());
             }
             return null;
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.toString());
             return null;
         }
@@ -84,17 +89,34 @@ public class FeedbackServiceImpl implements FeedbackService {
     @Override
     public boolean deleteFeedback(int feedbackId) {
         boolean delete = false;
-        try{
+        try {
             FeedbackDTO feedbackDTO = getFeedbackById(feedbackId);
 
-            if(feedbackDTO != null){
+            if (feedbackDTO != null) {
                 feedbackRepository.deleteById(feedbackId);
                 delete = true;
             }
             return delete;
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.toString());
             return delete;
+        }
+    }
+
+    @Override
+    public List<FeedbackDTO> getFeedbackByResourceId(int resourceId) {
+        try {
+            List<Feedback> feedbacks = feedbackRepository.getFeedbackByResourceId(resourceId);
+
+            if (feedbacks != null) {
+                return modelMapper.map(feedbacks, new TypeToken<List<FeedbackDTO>>() {
+                }.getType());
+            }
+            return null;
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            return null;
         }
     }
 }

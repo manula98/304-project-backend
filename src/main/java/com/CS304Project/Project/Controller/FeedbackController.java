@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Objects;
 
 @RestController
-@CrossOrigin
+@CrossOrigin("*")
 @RequestMapping
 public class FeedbackController {
     @Autowired
@@ -80,6 +80,23 @@ public class FeedbackController {
             map.put("status", 1);
             map.put("data", feedbackDTO);
             return  new ResponseEntity<>(map, HttpStatus.OK);
+
+        }else{
+            map.clear();
+            map.put("status", 0);
+            map.put("message", "Feedback not found");
+            return new ResponseEntity<>(map, HttpStatus.OK);
+        }
+    }
+    @GetMapping("/getFeedbackByResourceId/{resourceId}")
+    public ResponseEntity<?> getFeedbackByResourceId(@PathVariable int resourceId){
+        Map<String,Object> map = new LinkedHashMap<String, Object>();
+        List<FeedbackDTO> feedbackDTOS = feedbackService.getFeedbackByResourceId(resourceId);
+
+        if(feedbackDTOS != null){
+            map.put("status", 1);
+            map.put("data", feedbackDTOS);
+            return new ResponseEntity<>(map, HttpStatus.OK);
 
         }else{
             map.clear();
