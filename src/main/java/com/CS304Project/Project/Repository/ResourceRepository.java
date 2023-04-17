@@ -16,4 +16,7 @@ public interface ResourceRepository extends JpaRepository<Resource, Integer> {
     Resource updateResource(String resourceName, String description, boolean staffAvalibility, boolean studentAvalibility, boolean publicAvalibility, int resourceId);
     @Query(value = "SELECT * FROM resource_allocation.resource WHERE resource_id = ?1 LIMIT 1",nativeQuery = true)
     Resource getResourceById(@Param(value = "resourceId")int resourceId);
+
+    @Query(value = "SELECT email FROM resource_allocation.administrative WHERE adminid = (SELECT administrative_adminid FROM resource_allocation.category WHERE category_id = (SELECT category_id FROM resource_allocation.resource WHERE resource_id = ?1)) LIMIT 1",nativeQuery = true)
+    String getAminEmailByResourceId(@Param(value = "resourceId") int resourceId);
 }

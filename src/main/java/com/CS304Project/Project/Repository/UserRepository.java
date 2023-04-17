@@ -31,4 +31,7 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     @Query(value = "SELECT * FROM resource_allocation.user WHERE user_id = (SELECT user_id FROM resource_allocation.login_user_details WHERE email = ?1) LIMIT 1", nativeQuery = true)
     Optional<User> findByEmail(String email);
 
+    @Query(value = "SELECT email FROM resource_allocation.login_user_details WHERE login_id = (SELECT login_id FROM resource_allocation.user WHERE user_id = ?1) LIMIT 1", nativeQuery = true)
+    String getEmailByUserId(@Param(value = "userId") int userId);
+
 }
